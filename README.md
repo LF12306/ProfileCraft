@@ -55,6 +55,31 @@ It lets you freely edit text, customize theme colors, upload avatars and QR code
 
 ---
 
+## 🏠 Local Deployment
+
+### Option 1: npm (Development)
+```bash
+git clone https://github.com/LF12306/ProfileCraft.git
+cd ProfileCraft
+npm install
+npm run dev
+```
+Open http://localhost:5173
+
+### Option 2: npm (Production Preview)
+```bash
+npm run start
+```
+Open http://localhost:4173
+
+### Option 3: Docker
+```bash
+docker compose up -d
+```
+Open http://localhost:3000
+
+---
+
 ## 📦 Exporting
 - Export HTML or PNG from the top toolbar.  
 - One-click reset to default.
