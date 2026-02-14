@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useProfile } from '../../context/ProfileContext';
 import { ProfileInfoElement, ProfileItem } from '../../types/data';
 import EditableText from '../ui/EditableText';
@@ -15,6 +15,7 @@ interface ProfileInfoBlockProps {
 
 const ProfileInfoBlock: React.FC<ProfileInfoBlockProps> = ({ element, cardIndex, elementIndex, onDelete }) => {
     const { profileData, updateProfileData } = useProfile();
+    const fileInputRef = useRef<HTMLInputElement>(null);
 
     // Migration effect: Convert old fields to items array if items is missing
     useEffect(() => {
@@ -101,6 +102,8 @@ const ProfileInfoBlock: React.FC<ProfileInfoBlockProps> = ({ element, cardIndex,
             };
             reader.readAsDataURL(file);
         }
+        // 重置 value，确保可以重复选择同一文件
+        e.target.value = '';
     };
     
     if(!profileData) return null;
@@ -108,8 +111,8 @@ const ProfileInfoBlock: React.FC<ProfileInfoBlockProps> = ({ element, cardIndex,
     return (
         <div className="element-container profile-section-layout">
             <div className="avatar-container">
-                <img src={profileData.userSettings.avatarSrc} alt="用户头像" onClick={() => document.getElementById('avatarUploadInput')?.click()} />
-                <input type="file" id="avatarUploadInput" accept="image/*" style={{ display: 'none' }} onChange={handleAvatarUpload} />
+                <img src={profileData.userSettings.avatarSrc} alt="用户头像" onClick={() => fileInputRef.current?.click()} />
+                <input ref={fileInputRef} type="file" accept="image/*" style={{ display: 'none' }} onChange={handleAvatarUpload} />
             </div>
 
             <div className="profile-info-text">
